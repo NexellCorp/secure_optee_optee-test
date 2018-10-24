@@ -1,5 +1,9 @@
 LOCAL_PATH := $(call my-dir)
 
+ANDROID_VERSION_STR := $(subst ., ,$(PLATFORM_VERSION))
+ANDROID_VERSION_MAJOR := $(firstword $(ANDROID_VERSION_STR))
+ifeq "7" "$(ANDROID_VERSION_MAJOR)"
+
 VERSION = $(shell git describe --always --dirty=-dev 2>/dev/null || echo Unknown)
 OPTEE_CLIENT_PATH ?= $(LOCAL_PATH)/../optee_client
 
@@ -63,3 +67,5 @@ LOCAL_CFLAGS += -DTA_DIR=\"/system/lib/optee_armtz\"
 LOCAL_CFLAGS += -pthread
 
 include $(BUILD_EXECUTABLE)
+
+endif
